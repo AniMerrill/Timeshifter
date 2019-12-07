@@ -7,7 +7,9 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 32 )
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" groups=[
+"Player",
+]]
 script = ExtResource( 2 )
 
 [node name="StateMachine" type="Node" parent="."]
@@ -23,3 +25,31 @@ shape = SubResource( 1 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
 [node name="BulletSpawn" type="Position2D" parent="."]
+position = Vector2( 50, 0 )
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="PanelContainer" parent="HUD/MarginContainer"]
+self_modulate = Color( 1, 1, 1, 0.792157 )
+margin_right = 70.0
+margin_bottom = 40.0
+
+[node name="Label" type="Label" parent="HUD/MarginContainer/Panel"]
+margin_left = 7.0
+margin_top = 13.0
+margin_right = 63.0
+margin_bottom = 27.0
+text = "Time: 60"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true

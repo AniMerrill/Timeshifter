@@ -7,8 +7,12 @@ func _ready() -> void:
 	call_deferred("set_state", states.idle)
 
 func _state_logic(delta : float) -> void:
+	parent.countdown(delta)
+	
 	parent.apply_input()
 	parent.apply_movement()
+	
+	parent.update_hud()
 
 func _get_transition(delta : float) -> int:
 	
