@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Godot Wild Jam 16 BRB Card.png-3e0ae2c65dd2f6e49cc5e1b71ae64978.stex"
+path="res://.import/Godot Wild Jam 16 Card.png-ad2f128b0ae9d5468a07d57a0f499d98.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Godot Wild Jam 16 BRB Card.png"
-dest_files=[ "res://.import/Godot Wild Jam 16 BRB Card.png-3e0ae2c65dd2f6e49cc5e1b71ae64978.stex" ]
+source_file="res://Godot Wild Jam 16 Card.png"
+dest_files=[ "res://.import/Godot Wild Jam 16 Card.png-ad2f128b0ae9d5468a07d57a0f499d98.stex" ]
 
 [params]
 
