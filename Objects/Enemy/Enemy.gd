@@ -1,10 +1,10 @@
 extends KinematicBody2D
 
-onready var player := get_parent().get_node("Player")
-
-onready var tilemap = get_parent().get_node("TileMap")
-onready var astar = get_parent().astar
-onready var astar_ary = get_parent().astar_ary
+# Assigned in Level.gd::spawn_objects()
+var player# := get_parent().get_node("Player")
+var tilemap# = get_parent().get_node("TileMap")
+var astar# = get_parent().astar
+var astar_ary# = get_parent().astar_ary
 
 var health := 3
 
