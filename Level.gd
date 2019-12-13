@@ -3,13 +3,13 @@ extends Node2D
 onready var player = preload("res://Objects/Player/Player.tscn")
 onready var enemy = preload("res://Objects/Enemy/Enemy.tscn")
 
-var empty_idx := 1
+var empty_idx := 3
 
-var room_size := Vector2(10,10)
+var room_size := Vector2(6, 6)
 var room_count := 10
 var room_array = []
 
-var enemy_count = 20
+var enemy_count = 10
 
 var astar = AStar2D.new()
 var astar_ary = {}
@@ -81,9 +81,9 @@ func map_generation():
 					
 				if x == 0 || y == 0 || \
 				x == room_size.x -1 || y == room_size.y - 1:
-					$TileMap.set_cell(cell_x, cell_y, 0)
+					$TileMap.set_cell(cell_x, cell_y, 2)
 				else:
-					$TileMap.set_cell(cell_x, cell_y, 1)
+					$TileMap.set_cell(cell_x, cell_y, empty_idx)
 					# TODO: Make a list of rooms as they're being
 					# generated and add an array of floor tiles added
 					# to that room so enemies/obstacles/player can be
@@ -106,26 +106,26 @@ func map_generation():
 					
 					if abs(offset_x - prev_room.x) == 1:
 						if y == 0 || y == hallway.y - 1:
-							$TileMap.set_cell(cell_x, cell_y, 0)
+							$TileMap.set_cell(cell_x, cell_y, 2)
 						else:
-							$TileMap.set_cell(cell_x, cell_y, 1)
+							$TileMap.set_cell(cell_x, cell_y, empty_idx)
 					if abs(offset_y - prev_room.y) == 1:
 						if x == 0 || x == hallway.x - 1:
-							$TileMap.set_cell(cell_x, cell_y, 0)
+							$TileMap.set_cell(cell_x, cell_y, 2)
 						else:
-							$TileMap.set_cell(cell_x, cell_y, 1)
+							$TileMap.set_cell(cell_x, cell_y, empty_idx)
 	
 	map_rect = $TileMap.get_used_rect()
 	
-	for cell_y in range(map_rect.position.y,
-						map_rect.position.y + map_rect.size.y
-	):
-		for cell_x in range(map_rect.position.x,
-							map_rect.position.x + map_rect.size.x
-		):
-			var non_fill = [0, 1]
-			if !non_fill.has($TileMap.get_cell(cell_x, cell_y)):
-				$TileMap.set_cell(cell_x, cell_y, 0)
+#	for cell_y in range(map_rect.position.y,
+#						map_rect.position.y + map_rect.size.y
+#	):
+#		for cell_x in range(map_rect.position.x,
+#							map_rect.position.x + map_rect.size.x
+#		):
+#			var non_fill = [0, 1]
+#			if !non_fill.has($TileMap.get_cell(cell_x, cell_y)):
+#				$TileMap.set_cell(cell_x, cell_y, 0)
 
 func astar_generation() -> void:
 	var astar_idx = 0

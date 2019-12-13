@@ -10,11 +10,15 @@ var health := 3
 
 var speed := 4 * Globals.UNIT_SIZE
 var move_dir := Vector2.ZERO
+var velocity := Vector2.ZERO
 
 var path = []
 var should_get_path = true
 
 var has_seen_player := false
+
+var anim_prefix = "s_"
+var cur_anim = "idle"
 
 func _ready():
 	$Area2D.connect("body_entered", self, "on_collide")
@@ -59,7 +63,9 @@ func follow_path(delta : float) -> void:
 			sign(path[0].y - global_position.y)
 			)
 		
-		move_and_slide(move_dir * speed)
+		velocity = move_dir * speed
+		
+		move_and_slide(velocity)
 		
 		if abs(global_position.x - path[0].x) < 0.5:
 			global_position.x = path[0].x
