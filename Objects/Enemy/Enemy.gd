@@ -77,10 +77,15 @@ func follow_path(delta : float) -> void:
 	else:
 		should_get_path = true
 
-func bullet_hit() -> void:
-	health -= 1
+func bullet_hit(damage : int) -> void:
+	health -= damage
 	
 	if health <= 0:
+		player.enemies_killed += 1
+		
+		if get_parent().get_child_count() == 1:
+			get_parent().get_parent().emit_signal("win_condition")
+		
 		queue_free()
 
 func on_collide(body : Node) -> void:

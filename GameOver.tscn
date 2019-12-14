@@ -1,0 +1,40 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://GameOver.gd" type="Script" id=1]
+
+[node name="GameOver" type="CanvasLayer"]
+script = ExtResource( 1 )
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+margin_left = 596.0
+margin_top = 334.0
+margin_right = 683.0
+margin_bottom = 386.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 80.0
+margin_bottom = 45.0
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/VBoxContainer"]
+margin_right = 73.0
+margin_bottom = 14.0
+text = "Game Over"
+
+[node name="Button" type="Button" parent="MarginContainer/PanelContainer/VBoxContainer"]
+margin_top = 18.0
+margin_right = 73.0
+margin_bottom = 38.0
+text = "Restart"
+
+[node name="Timer" type="Timer" parent="."]

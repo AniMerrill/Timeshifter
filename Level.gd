@@ -1,21 +1,29 @@
 extends Node2D
 
+signal win_condition
+signal lose_condition
+
 onready var player = preload("res://Objects/Player/Player.tscn")
 onready var enemy = preload("res://Objects/Enemy/Enemy.tscn")
 
 var empty_idx := 3
 
-var room_size := Vector2(6, 6)
-var room_count := 10
+var room_size := Vector2(8,8)
+var room_count := 4
 var room_array = []
+var room_tiles = []
 
-var enemy_count = 10
+var total_enemies = -1
 
 var astar = AStar2D.new()
 var astar_ary = {}
 
 var map_rect
 var map_seed = -1
+
+var damage_upgrades = 0
+var shield_upgrades = 0
+var extra_charges = 0
 
 func _ready():
 	seed(get_random_seed())
@@ -25,6 +33,9 @@ func _ready():
 	map_generation()
 	astar_generation()
 	spawn_objects()
+	
+	connect("win_condition", self, "level_won")
+	connect("lose_condition", self, "game_over")
 
 func get_random_seed(preset : int = -1):
 	if preset == -1:
@@ -74,6 +85,8 @@ func map_generation():
 			offset_x = new_room.x
 			offset_y = new_room.y
 		
+		room_tiles.append([])
+		
 		for y in range(room_size.y):
 			for x in range(room_size.x):
 				var cell_x = (x - room_size.x / 2) + (offset_x * (room_size.x + 2))
@@ -84,10 +97,8 @@ func map_generation():
 					$TileMap.set_cell(cell_x, cell_y, 2)
 				else:
 					$TileMap.set_cell(cell_x, cell_y, empty_idx)
-					# TODO: Make a list of rooms as they're being
-					# generated and add an array of floor tiles added
-					# to that room so enemies/obstacles/player can be
-					# spawned per room instead of totally arbitrarily
+					
+					room_tiles[z].append(Vector2(cell_x, cell_y))
 		
 		if prev_room != null:
 			var hallway_size = int(rand_range(4, room_size.x))
@@ -172,35 +183,51 @@ func astar_generation() -> void:
 				astar_idx += 1
 
 func spawn_objects():
-	var floor_tiles = $TileMap.get_used_cells_by_id(empty_idx)
+	var floor_tiles = room_tiles[randi() % room_tiles.size()]
 	var spawn_tile = floor_tiles[randi() % floor_tiles.size()]
 	
+	room_tiles.remove(room_tiles.find(floor_tiles))
 	floor_tiles.remove(floor_tiles.find(spawn_tile))
 	
 	var p = player.instance()
 	
 	p.position = $TileMap.map_to_world(spawn_tile) + ($TileMap.cell_size / 2)
 	
-	print(map_rect)
-	
 	p.get_node("Camera2D").limit_left = map_rect.position.x * $TileMap.cell_size.x
 	p.get_node("Camera2D").limit_right = map_rect.end.x * $TileMap.cell_size.x
 	p.get_node("Camera2D").limit_top = map_rect.position.y * $TileMap.cell_size.y
 	p.get_node("Camera2D").limit_bottom = map_rect.end.y * $TileMap.cell_size.y
 	
+	p.health += extra_charges
+	p.damage += damage_upgrades
+	p.i_frame_time += float(shield_upgrades / 2)
+	
 	add_child(p)
 	
-	for i in range(enemy_count):
-		var e = enemy.instance()
+	for i in range(room_tiles.size()):
+		floor_tiles = room_tiles[i]
 		
-		e.player = p
-		e.tilemap = $TileMap
-		e.astar = astar
-		e.astar_ary = astar_ary
+		var enemy_count = randi() % 4 + 1
 		
-		spawn_tile = floor_tiles[randi() % floor_tiles.size()]
-		floor_tiles.remove(floor_tiles.find(spawn_tile))
-		
-		e.position = $TileMap.map_to_world(spawn_tile) + ($TileMap.cell_size / 2)
-		
-		add_child(e)
+		for j in range(enemy_count):
+			var e = enemy.instance()
+			
+			e.player = p
+			e.tilemap = $TileMap
+			e.astar = astar
+			e.astar_ary = astar_ary
+			
+			spawn_tile = floor_tiles[randi() % floor_tiles.size()]
+			floor_tiles.remove(floor_tiles.find(spawn_tile))
+			
+			e.position = $TileMap.map_to_world(spawn_tile) + ($TileMap.cell_size / 2)
+			
+			$Enemies.add_child(e)
+	
+	total_enemies = $Enemies.get_child_count()
+
+func level_won():
+	get_parent().level_complete()
+
+func game_over():
+	get_parent().game_over()

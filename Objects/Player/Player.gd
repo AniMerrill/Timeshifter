@@ -16,6 +16,12 @@ var i_frames = false
 
 var cur_anim = "idle"
 
+var enemies_killed = 0
+
+var damage = 1
+
+var dead = false
+
 func _ready() -> void:
 	$Timer.connect("timeout", self, "disable_i_frames")
 
@@ -30,6 +36,7 @@ func _input(e : InputEvent) -> void:
 		inst.velocity = face_dir * shot_speed
 		inst.position = $Rig/BulletSpawn.global_position
 		inst.rotation_degrees = 180
+		inst.damage = damage
 		get_parent().add_child(inst)
 	elif e.is_action_pressed("shoot_right"):
 		face_dir = Vector2.RIGHT
@@ -40,6 +47,7 @@ func _input(e : InputEvent) -> void:
 		var inst = bullet.instance()
 		inst.velocity = face_dir * shot_speed
 		inst.position = $Rig/BulletSpawn.global_position
+		inst.damage = damage
 		get_parent().add_child(inst)
 	elif e.is_action_pressed("shoot_up"):
 		face_dir = Vector2.UP
@@ -51,6 +59,7 @@ func _input(e : InputEvent) -> void:
 		inst.velocity = face_dir * shot_speed
 		inst.position = $Rig/BulletSpawn.global_position
 		inst.rotation_degrees = 90
+		inst.damage = damage
 		get_parent().add_child(inst)
 	elif e.is_action_pressed("shoot_down"):
 		face_dir = Vector2.DOWN
@@ -62,10 +71,15 @@ func _input(e : InputEvent) -> void:
 		inst.velocity = face_dir * shot_speed
 		inst.position = $Rig/BulletSpawn.global_position
 		inst.rotation_degrees = 270
+		inst.damage = damage
 		get_parent().add_child(inst)
 
 func countdown(delta : float) -> void:
 	health -= delta
+	
+	if health <= 0 && !dead:
+		dead = true
+		get_parent().emit_signal("lose_condition")
 
 func apply_input() -> void:
 	move_dir = Vector2(
@@ -87,20 +101,24 @@ func apply_movement() -> void:
 
 func take_damage():
 	if !i_frames:
-		health -= 1
+		health -= 5
 		
-		if health <= 0:
-			print("die")
+		if health <= 0 && !dead:
+			dead = true
+			get_parent().emit_signal("lose_condition")
 		else:
-			print("iframes start")
+			$ShieldAnim.play("appear")
 			i_frames = true
 			$Timer.start()
 
 func update_hud():
 	var label = $HUD/MarginContainer/Panel/Label
 	
-	label.text = "Time: " + str(int(health)) + "\nVelocity: " + str(velocity)
+	label.text = "Time: " + str(int(health)) + "\n"
+	label.text += "Enemies: " + str(enemies_killed) + "/" + str(get_parent().total_enemies) + "\n"
+	label.text += "Damage: " + str(damage) + "\n"
+	label.text += "Shield: " + str(i_frame_time)
 
 func disable_i_frames():
-	print("iframes stop")
+	$ShieldAnim.play("disappear")
 	i_frames = false
