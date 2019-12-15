@@ -2,18 +2,31 @@ extends CanvasLayer
 
 var time_charges = -1
 
-onready var damage = $MarginContainer/PanelContainer/VBoxContainer/HBoxContainer/Damage
-onready var shield = $MarginContainer/PanelContainer/VBoxContainer/HBoxContainer/Shield
-onready var next = $MarginContainer/PanelContainer/VBoxContainer/HBoxContainer/Next
+onready var damage = $MarginContainer/VBoxContainer/HBoxContainer/Damage
+onready var shield = $MarginContainer/VBoxContainer/HBoxContainer/Shield
+onready var next = $MarginContainer/VBoxContainer/HBoxContainer/Next
 
 func _ready():
+	$VOX.connect("finished", self, "vox_finished")
+	
 	damage.connect("pressed", self, "damage_upgrade")
 	shield.connect("pressed", self, "shield_upgrade")
 	next.connect("pressed", self, "go_to_next_level")
 	
 	update_store()
 	
-	$MarginContainer/PanelContainer/VBoxContainer/TimeCharges.grab_focus()
+	damage.disabled = true
+	shield.disabled = true
+	next.disabled = true
+	
+	$VOX.play()
+
+func vox_finished():
+	update_store()
+	
+	next.disabled = false
+	
+	next.grab_focus()
 
 func damage_upgrade():
 	time_charges -= 25
@@ -33,5 +46,8 @@ func update_store():
 	if time_charges < 25:
 		damage.disabled = true
 		shield.disabled = true
+	else:
+		damage.disabled = false
+		shield.disabled = false
 	
-	$MarginContainer/PanelContainer/VBoxContainer/TimeCharges.text = str(time_charges)
+	$MarginContainer/VBoxContainer/TimeCharges.text = str(time_charges)

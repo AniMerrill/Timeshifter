@@ -1,12 +1,15 @@
 extends KinematicBody2D
 
+onready var pew = preload("res://SFX/laser.wav")
+onready var splat = preload("res://SFX/splat.wav")
+
 onready var bullet := preload("res://Objects/Player/Bullet.tscn")
 
 var face_dir := Vector2.RIGHT
 var move_dir := Vector2.ZERO
 var velocity := Vector2.ZERO
 
-var health := 60.0
+var health := 400.0
 
 var speed := 5 * Globals.UNIT_SIZE
 var shot_speed := 10 * Globals.UNIT_SIZE
@@ -37,6 +40,10 @@ func _input(e : InputEvent) -> void:
 		inst.position = $Rig/BulletSpawn.global_position
 		inst.rotation_degrees = 180
 		inst.damage = damage
+		
+		get_parent().get_parent().get_node("SFX").stream = pew
+		get_parent().get_parent().get_node("SFX").play()
+		
 		get_parent().add_child(inst)
 	elif e.is_action_pressed("shoot_right"):
 		face_dir = Vector2.RIGHT
@@ -48,6 +55,10 @@ func _input(e : InputEvent) -> void:
 		inst.velocity = face_dir * shot_speed
 		inst.position = $Rig/BulletSpawn.global_position
 		inst.damage = damage
+		
+		get_parent().get_parent().get_node("SFX").stream = pew
+		get_parent().get_parent().get_node("SFX").play()
+		
 		get_parent().add_child(inst)
 	elif e.is_action_pressed("shoot_up"):
 		face_dir = Vector2.UP
@@ -60,6 +71,10 @@ func _input(e : InputEvent) -> void:
 		inst.position = $Rig/BulletSpawn.global_position
 		inst.rotation_degrees = 90
 		inst.damage = damage
+		
+		get_parent().get_parent().get_node("SFX").stream = pew
+		get_parent().get_parent().get_node("SFX").play()
+		
 		get_parent().add_child(inst)
 	elif e.is_action_pressed("shoot_down"):
 		face_dir = Vector2.DOWN
@@ -72,6 +87,10 @@ func _input(e : InputEvent) -> void:
 		inst.position = $Rig/BulletSpawn.global_position
 		inst.rotation_degrees = 270
 		inst.damage = damage
+		
+		get_parent().get_parent().get_node("SFX").stream = pew
+		get_parent().get_parent().get_node("SFX").play()
+		
 		get_parent().add_child(inst)
 
 func countdown(delta : float) -> void:
@@ -79,6 +98,8 @@ func countdown(delta : float) -> void:
 	
 	if health <= 0 && !dead:
 		dead = true
+		get_parent().get_parent().get_node("SFX").stream = splat
+		get_parent().get_parent().get_node("SFX").play()
 		get_parent().emit_signal("lose_condition")
 
 func apply_input() -> void:
@@ -105,6 +126,8 @@ func take_damage():
 		
 		if health <= 0 && !dead:
 			dead = true
+			get_parent().get_parent().get_node("SFX").stream = splat
+			get_parent().get_parent().get_node("SFX").play()
 			get_parent().emit_signal("lose_condition")
 		else:
 			$ShieldAnim.play("appear")
@@ -112,12 +135,17 @@ func take_damage():
 			$Timer.start()
 
 func update_hud():
-	var label = $HUD/MarginContainer/Panel/Label
+	var time_lbl = $HUD/MarginContainer/HBoxContainer/TimeCharges/Label2
+	var enemy_lbl = $HUD/MarginContainer/HBoxContainer/Enemies/Label2
+	var dmg_lbl = $HUD/MarginContainer/HBoxContainer/DMGUps/Label2
+	var shield_lbl = $HUD/MarginContainer/HBoxContainer/ShieldUps/Label2
+	var score_lbl = $HUD/MarginContainer/HBoxContainer/Score/Label2
 	
-	label.text = "Time: " + str(int(health)) + "\n"
-	label.text += "Enemies: " + str(enemies_killed) + "/" + str(get_parent().total_enemies) + "\n"
-	label.text += "Damage: " + str(damage) + "\n"
-	label.text += "Shield: " + str(i_frame_time)
+	time_lbl.text = str(int(health))
+	enemy_lbl.text = str(enemies_killed) + "/" + str(get_parent().total_enemies)
+	dmg_lbl.text = str(get_parent().damage_upgrades)
+	shield_lbl.text = str(get_parent().shield_upgrades)
+	score_lbl.text = str(get_parent().get_parent().score)
 
 func disable_i_frames():
 	$ShieldAnim.play("disappear")

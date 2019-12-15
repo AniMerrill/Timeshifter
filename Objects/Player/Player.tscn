@@ -1,10 +1,11 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Objects/Player/PlayerSM.gd" type="Script" id=1]
 [ext_resource path="res://Objects/Player/Player.gd" type="Script" id=2]
 [ext_resource path="res://Objects/Player/quazar_sheet.png" type="Texture" id=3]
 [ext_resource path="res://Objects/Player/default_gun.png" type="Texture" id=4]
 [ext_resource path="res://Objects/Player/shield_sheet.png" type="Texture" id=5]
+[ext_resource path="res://Styles/default_font.tres" type="DynamicFont" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 10, 24 )
@@ -896,27 +897,145 @@ anims/disappear = SubResource( 20 )
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
+[node name="ColorRect" type="ColorRect" parent="HUD"]
+margin_right = 1280.0
+margin_bottom = 70.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
 [node name="MarginContainer" type="MarginContainer" parent="HUD"]
-margin_right = 40.0
-margin_bottom = 40.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -650.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Panel" type="PanelContainer" parent="HUD/MarginContainer"]
-self_modulate = Color( 1, 1, 1, 0.792157 )
-margin_right = 70.0
-margin_bottom = 40.0
-
-[node name="Label" type="Label" parent="HUD/MarginContainer/Panel"]
-margin_left = 7.0
-margin_top = 13.0
-margin_right = 63.0
-margin_bottom = 27.0
-text = "Time: 60"
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/MarginContainer"]
+margin_right = 1280.0
+margin_bottom = 70.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="TimeCharges" type="VBoxContainer" parent="HUD/MarginContainer/HBoxContainer"]
+margin_top = 17.0
+margin_right = 252.0
+margin_bottom = 53.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="HUD/MarginContainer/HBoxContainer/TimeCharges"]
+margin_right = 252.0
+margin_bottom = 16.0
+custom_fonts/font = ExtResource( 6 )
+text = "Time Charges"
+align = 1
+
+[node name="Label2" type="Label" parent="HUD/MarginContainer/HBoxContainer/TimeCharges"]
+margin_top = 20.0
+margin_right = 252.0
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 6 )
+text = "000"
+align = 1
+
+[node name="Enemies" type="VBoxContainer" parent="HUD/MarginContainer/HBoxContainer"]
+margin_left = 256.0
+margin_top = 17.0
+margin_right = 508.0
+margin_bottom = 53.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="HUD/MarginContainer/HBoxContainer/Enemies"]
+margin_right = 252.0
+margin_bottom = 16.0
+custom_fonts/font = ExtResource( 6 )
+text = "Enemies"
+align = 1
+
+[node name="Label2" type="Label" parent="HUD/MarginContainer/HBoxContainer/Enemies"]
+margin_top = 20.0
+margin_right = 252.0
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 6 )
+text = "00/00"
+align = 1
+
+[node name="DMGUps" type="VBoxContainer" parent="HUD/MarginContainer/HBoxContainer"]
+margin_left = 512.0
+margin_top = 17.0
+margin_right = 764.0
+margin_bottom = 53.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="HUD/MarginContainer/HBoxContainer/DMGUps"]
+margin_right = 252.0
+margin_bottom = 16.0
+custom_fonts/font = ExtResource( 6 )
+text = "DMG Ups"
+align = 1
+
+[node name="Label2" type="Label" parent="HUD/MarginContainer/HBoxContainer/DMGUps"]
+margin_top = 20.0
+margin_right = 252.0
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 6 )
+text = "00"
+align = 1
+
+[node name="ShieldUps" type="VBoxContainer" parent="HUD/MarginContainer/HBoxContainer"]
+margin_left = 768.0
+margin_top = 17.0
+margin_right = 1020.0
+margin_bottom = 53.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="HUD/MarginContainer/HBoxContainer/ShieldUps"]
+margin_right = 252.0
+margin_bottom = 16.0
+custom_fonts/font = ExtResource( 6 )
+text = "Shield Ups"
+align = 1
+
+[node name="Label2" type="Label" parent="HUD/MarginContainer/HBoxContainer/ShieldUps"]
+margin_top = 20.0
+margin_right = 252.0
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 6 )
+text = "00"
+align = 1
+
+[node name="Score" type="VBoxContainer" parent="HUD/MarginContainer/HBoxContainer"]
+margin_left = 1024.0
+margin_top = 17.0
+margin_right = 1280.0
+margin_bottom = 53.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="HUD/MarginContainer/HBoxContainer/Score"]
+margin_right = 256.0
+margin_bottom = 16.0
+custom_fonts/font = ExtResource( 6 )
+text = "Score"
+align = 1
+
+[node name="Label2" type="Label" parent="HUD/MarginContainer/HBoxContainer/Score"]
+margin_top = 20.0
+margin_right = 256.0
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 6 )
+text = "0000000000000"
+align = 1
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true

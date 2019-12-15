@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+onready var splat = preload("res://SFX/splat.wav")
+
 # Assigned in Level.gd::spawn_objects()
 var player# := get_parent().get_node("Player")
 var tilemap# = get_parent().get_node("TileMap")
@@ -81,16 +83,25 @@ func bullet_hit(damage : int) -> void:
 	health -= damage
 	
 	if health <= 0:
+		get_parent().get_parent().get_parent().score += 100
+		
+		get_parent().get_parent().get_parent().get_node("SFX").stream = splat
+		get_parent().get_parent().get_parent().get_node("SFX").play()
+		
 		player.enemies_killed += 1
 		
 		if get_parent().get_child_count() == 1:
+			get_parent().get_parent().get_parent().score += get_parent().get_parent().get_parent().level_number * 1000
 			get_parent().get_parent().emit_signal("win_condition")
+		
+		player.update_hud()
 		
 		queue_free()
 
 func on_collide(body : Node) -> void:
 	if body.is_in_group(Globals.PlayerGroup):
 		body.take_damage()
+		body.update_hud()
 
 func reset_pathfinding() -> void:
 	should_get_path = true

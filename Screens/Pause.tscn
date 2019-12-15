@@ -1,0 +1,105 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Screens/Pause.gd" type="Script" id=1]
+[ext_resource path="res://Styles/default_font.tres" type="DynamicFont" id=3]
+[ext_resource path="res://Styles/big font.tres" type="DynamicFont" id=4]
+
+[node name="Pause" type="CanvasLayer"]
+script = ExtResource( 1 )
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -162.5
+margin_top = -90.0
+margin_right = 162.5
+margin_bottom = 90.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="ColorRect" parent="MarginContainer"]
+margin_right = 325.0
+margin_bottom = 180.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0, 0, 0, 1 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+margin_left = 20.0
+margin_top = 27.0
+margin_right = 304.0
+margin_bottom = 153.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+margin_left = 22.0
+margin_right = 262.0
+margin_bottom = 24.0
+size_flags_horizontal = 4
+custom_fonts/font = ExtResource( 4 )
+text = "GAME OVER!"
+align = 1
+
+[node name="Control" type="Control" parent="MarginContainer/VBoxContainer"]
+margin_top = 28.0
+margin_right = 284.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 0, 20 )
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer"]
+margin_left = 88.0
+margin_top = 52.0
+margin_right = 196.0
+margin_bottom = 74.0
+focus_neighbour_top = NodePath("../Button3")
+focus_neighbour_bottom = NodePath("../Button2")
+size_flags_horizontal = 4
+size_flags_vertical = 4
+custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 0.905882, 0.0705882, 0.854902, 1 )
+custom_colors/font_color_hover = Color( 0, 1, 0.882353, 1 )
+custom_colors/font_color_pressed = Color( 0, 1, 0.882353, 1 )
+text = "Resume"
+flat = true
+
+[node name="Button2" type="Button" parent="MarginContainer/VBoxContainer"]
+margin_top = 78.0
+margin_right = 284.0
+margin_bottom = 100.0
+focus_neighbour_top = NodePath("../Button")
+focus_neighbour_bottom = NodePath("../Button3")
+size_flags_horizontal = 4
+size_flags_vertical = 4
+custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 0.905882, 0.0705882, 0.854902, 1 )
+custom_colors/font_color_hover = Color( 0, 1, 0.882353, 1 )
+custom_colors/font_color_pressed = Color( 0, 1, 0.882353, 1 )
+text = "Quit To Main Menu"
+flat = true
+
+[node name="Button3" type="Button" parent="MarginContainer/VBoxContainer"]
+margin_left = 16.0
+margin_top = 104.0
+margin_right = 268.0
+margin_bottom = 126.0
+focus_neighbour_top = NodePath("../Button2")
+focus_neighbour_bottom = NodePath(".")
+size_flags_horizontal = 4
+size_flags_vertical = 4
+custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 0.905882, 0.0705882, 0.854902, 1 )
+custom_colors/font_color_hover = Color( 0, 1, 0.882353, 1 )
+custom_colors/font_color_pressed = Color( 0, 1, 0.882353, 1 )
+text = "Quit To Desktop"
+flat = true
+
+[node name="Timer" type="Timer" parent="."]

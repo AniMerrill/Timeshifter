@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/timeshifter.wav-97340fa353f17d3e7e028b3ff14287d7.sample"
+
+[deps]
+
+source_file="res://SFX/timeshifter.wav"
+dest_files=[ "res://.import/timeshifter.wav-97340fa353f17d3e7e028b3ff14287d7.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/level_complete.wav-4c9b72dfabc1c0c0637f50df3821d193.sample"
+
+[deps]
+
+source_file="res://SFX/level_complete.wav"
+dest_files=[ "res://.import/level_complete.wav-4c9b72dfabc1c0c0637f50df3821d193.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
