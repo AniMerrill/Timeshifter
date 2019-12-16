@@ -10,6 +10,7 @@ func _ready():
 
 func _state_logic(delta : float) -> void:
 	parent.check_for_player()
+	parent.check_collision()
 	
 	if state == states.chase:
 		if parent.should_get_path && parent.has_seen_player:

@@ -29,6 +29,15 @@ collision_layer = 3
 collision_mask = 2
 script = ExtResource( 2 )
 
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2( -5, 0 )
+local_coords = false
+direction = Vector2( -1, 0 )
+gravity = Vector2( 0, 0 )
+initial_velocity = 20.0
+scale_amount = 2.0
+color = Color( 0.690196, 0.941176, 0.384314, 1 )
+
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
 vframes = 4
@@ -36,6 +45,7 @@ hframes = 3
 frame = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

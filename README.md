@@ -28,3 +28,45 @@ If you would like to support me and my efforts in this kind of thing in the futu
 And definitely make sure to subscribe and follow me so you can keep up to date in the future!
 
 Ko-fi: https://ko-fi.com/animerrill
+
+### Sources
+
+#### Music
+
+Big shout out to MullyWhizz, my long time friend and musician, who pulled through with a couple of killer tracks for the game. You can check him out on Tumblr or his Spotify:
+
+mullywhizz.tumblr.com
+
+https://open.spotify.com/artist/5NDEJ6oFgYBz7JstzXoOFG?si=u5yxgzSUR3aHZ1dGtlhB3A
+
+#### Sound Effects
+
+The following sound effects were used for the game, and all of them fall under Creative Commons 0 license:
+
+unsheath_sword.wav
+https://freesound.org/people/Qat/sounds/107589/
+
+shing_1.wav
+https://freesound.org/people/1urker/sounds/435789/
+
+ding2.wav
+https://freesound.org/people/mrbriandesign/sounds/159011/
+
+Classic Laser Pew
+https://freesound.org/people/SeanSecret/sounds/440661/
+
+splat.wav
+https://freesound.org/people/ipaghost/sounds/335794/
+
+record_scratch.wav
+https://freesound.org/people/ludvique/sounds/71853/
+
+Reflect
+https://freesound.org/people/OwlStorm/sounds/404786/
+
+#### Font
+
+The following font was used for the game, and it falls under the SIL Open Font License:
+
+Press Start 2P
+https://fontlibrary.org/en/font/press-start-2p

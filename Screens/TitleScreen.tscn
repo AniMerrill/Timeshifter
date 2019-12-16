@@ -186,7 +186,7 @@ margin_bottom = 720.0
 
 [node name="NewGame" type="Button" parent="MarginContainer/VBoxContainer"]
 margin_right = 560.0
-margin_bottom = 170.0
+margin_bottom = 165.0
 size_flags_vertical = 3
 custom_fonts/font = ExtResource( 6 )
 custom_colors/font_color = Color( 0.905882, 0.0705882, 0.854902, 1 )
@@ -196,9 +196,9 @@ text = "New Game"
 flat = true
 
 [node name="HowToPlay" type="Button" parent="MarginContainer/VBoxContainer"]
-margin_top = 174.0
+margin_top = 169.0
 margin_right = 560.0
-margin_bottom = 344.0
+margin_bottom = 334.0
 size_flags_vertical = 3
 custom_fonts/font = ExtResource( 6 )
 custom_colors/font_color = Color( 0.905882, 0.0705882, 0.854902, 1 )
@@ -208,9 +208,9 @@ text = "How To Play"
 flat = true
 
 [node name="Credits" type="Button" parent="MarginContainer/VBoxContainer"]
-margin_top = 348.0
+margin_top = 338.0
 margin_right = 560.0
-margin_bottom = 518.0
+margin_bottom = 503.0
 size_flags_vertical = 3
 custom_fonts/font = ExtResource( 6 )
 custom_colors/font_color = Color( 0.905882, 0.0705882, 0.854902, 1 )
@@ -220,9 +220,9 @@ text = "Credits"
 flat = true
 
 [node name="Quit" type="Button" parent="MarginContainer/VBoxContainer"]
-margin_top = 522.0
+margin_top = 507.0
 margin_right = 560.0
-margin_bottom = 692.0
+margin_bottom = 672.0
 size_flags_vertical = 3
 custom_fonts/font = ExtResource( 6 )
 custom_colors/font_color = Color( 0.905882, 0.0705882, 0.854902, 1 )
@@ -232,27 +232,31 @@ text = "Quit"
 flat = true
 
 [node name="Control" type="Control" parent="MarginContainer/VBoxContainer"]
-margin_top = 696.0
+margin_top = 676.0
 margin_right = 560.0
-margin_bottom = 696.0
+margin_bottom = 676.0
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
-margin_top = 700.0
-margin_right = 560.0
-margin_bottom = 716.0
+margin_left = 32.0
+margin_top = 680.0
+margin_right = 528.0
+margin_bottom = 715.0
+size_flags_horizontal = 4
 custom_fonts/font = ExtResource( 2 )
-text = "2019 (c) AniMerrill Productions"
-align = 1
+text = "2019 (c) AniMerrill Productions
+v9"
+align = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Control2" type="Control" parent="MarginContainer/VBoxContainer"]
-margin_top = 720.0
+margin_top = 719.0
 margin_right = 560.0
-margin_bottom = 720.0
+margin_bottom = 719.0
 
 [node name="HowToPlay" type="MarginContainer" parent="."]
+visible = false
 margin_left = 720.0
 margin_right = 1280.0
 margin_bottom = 720.0
@@ -337,6 +341,7 @@ margin_bottom = 720.0
 size_flags_vertical = 3
 
 [node name="Credits" type="MarginContainer" parent="."]
+visible = false
 margin_left = 720.0
 margin_right = 1280.0
 margin_bottom = 720.0

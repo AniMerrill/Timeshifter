@@ -200,7 +200,7 @@ func spawn_objects():
 	
 	p.health += extra_charges
 	p.damage += damage_upgrades
-	p.i_frame_time += float(shield_upgrades / 2)
+	p.i_frame_time += float(shield_upgrades)
 	
 	add_child(p)
 	
@@ -225,6 +225,8 @@ func spawn_objects():
 			$Enemies.add_child(e)
 	
 	total_enemies = $Enemies.get_child_count()
+	
+	p.update_hud()
 
 func level_won():
 	get_parent().level_complete()

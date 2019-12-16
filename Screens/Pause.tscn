@@ -41,12 +41,12 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
-margin_left = 22.0
-margin_right = 262.0
+margin_left = 82.0
+margin_right = 202.0
 margin_bottom = 24.0
 size_flags_horizontal = 4
 custom_fonts/font = ExtResource( 4 )
-text = "GAME OVER!"
+text = "PAUSE"
 align = 1
 
 [node name="Control" type="Control" parent="MarginContainer/VBoxContainer"]

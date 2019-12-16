@@ -1,7 +1,11 @@
 extends KinematicBody2D
 
+onready var gibs = preload("res://Gibs.tscn")
+onready var gib_text = preload("res://quazar_gibs.png")
+
 onready var pew = preload("res://SFX/laser.wav")
 onready var splat = preload("res://SFX/splat.wav")
+onready var reflect = preload("res://SFX/reflect.wav")
 
 onready var bullet := preload("res://Objects/Player/Bullet.tscn")
 
@@ -9,7 +13,7 @@ var face_dir := Vector2.RIGHT
 var move_dir := Vector2.ZERO
 var velocity := Vector2.ZERO
 
-var health := 400.0
+var health := 80.0
 
 var speed := 5 * Globals.UNIT_SIZE
 var shot_speed := 10 * Globals.UNIT_SIZE
@@ -27,12 +31,15 @@ var dead = false
 
 func _ready() -> void:
 	$Timer.connect("timeout", self, "disable_i_frames")
+	
+	$Camera2D.current = true
 
 func _input(e : InputEvent) -> void:
 	if e.is_action_pressed("shoot_left"):
 		face_dir = Vector2.LEFT
 		
 		$BodyAnim.play("w_" + cur_anim)
+		$BodyAnim.advance(0.01)
 		$GunAnim.play("w_shoot")
 		
 		var inst = bullet.instance()
@@ -49,6 +56,7 @@ func _input(e : InputEvent) -> void:
 		face_dir = Vector2.RIGHT
 		
 		$BodyAnim.play("e_" + cur_anim)
+		$BodyAnim.advance(0.01)
 		$GunAnim.play("e_shoot")
 		
 		var inst = bullet.instance()
@@ -64,6 +72,7 @@ func _input(e : InputEvent) -> void:
 		face_dir = Vector2.UP
 		
 		$BodyAnim.play("n_" + cur_anim)
+		$BodyAnim.advance(0.01)
 		$GunAnim.play("n_shoot")
 		
 		var inst = bullet.instance()
@@ -80,6 +89,7 @@ func _input(e : InputEvent) -> void:
 		face_dir = Vector2.DOWN
 		
 		$BodyAnim.play("s_" + cur_anim)
+		$BodyAnim.advance(0.01)
 		$GunAnim.play("s_shoot")
 		
 		var inst = bullet.instance()
@@ -98,6 +108,9 @@ func countdown(delta : float) -> void:
 	
 	if health <= 0 && !dead:
 		dead = true
+		
+		print(get_parent().get_node("Enemies").get_child_count())
+		
 		get_parent().get_parent().get_node("SFX").stream = splat
 		get_parent().get_parent().get_node("SFX").play()
 		get_parent().emit_signal("lose_condition")
@@ -111,6 +124,8 @@ func apply_input() -> void:
 	)
 	
 	velocity = move_dir * speed
+	
+	
 	
 #	if move_dir != Vector2.ZERO:
 #		face_dir = move_dir
@@ -126,10 +141,22 @@ func take_damage():
 		
 		if health <= 0 && !dead:
 			dead = true
+			
+			var inst = gibs.instance()
+			inst.position = global_position
+			inst.emitting = true
+			
+			inst.texture = gib_text
+			
+			get_parent().get_parent().add_child(inst)
+			
 			get_parent().get_parent().get_node("SFX").stream = splat
 			get_parent().get_parent().get_node("SFX").play()
 			get_parent().emit_signal("lose_condition")
 		else:
+			get_parent().get_parent().get_node("SFX").stream = reflect
+			get_parent().get_parent().get_node("SFX").play()
+			
 			$ShieldAnim.play("appear")
 			i_frames = true
 			$Timer.start()

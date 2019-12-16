@@ -1,5 +1,6 @@
 extends KinematicBody2D
 
+onready var gibs = preload("res://Gibs.tscn")
 onready var splat = preload("res://SFX/splat.wav")
 
 # Assigned in Level.gd::spawn_objects()
@@ -23,7 +24,7 @@ var anim_prefix = "s_"
 var cur_anim = "idle"
 
 func _ready():
-	$Area2D.connect("body_entered", self, "on_collide")
+#	$Area2D.connect("body_entered", self, "on_collide")
 	$Timer.connect("timeout", self, "reset_pathfinding")
 
 func check_for_player() -> void:
@@ -85,6 +86,12 @@ func bullet_hit(damage : int) -> void:
 	if health <= 0:
 		get_parent().get_parent().get_parent().score += 100
 		
+		var inst = gibs.instance()
+		inst.position = global_position
+		inst.emitting = true
+		
+		get_parent().get_parent().add_child(inst)
+		
 		get_parent().get_parent().get_parent().get_node("SFX").stream = splat
 		get_parent().get_parent().get_parent().get_node("SFX").play()
 		
@@ -98,10 +105,15 @@ func bullet_hit(damage : int) -> void:
 		
 		queue_free()
 
-func on_collide(body : Node) -> void:
-	if body.is_in_group(Globals.PlayerGroup):
-		body.take_damage()
-		body.update_hud()
+func check_collision():
+	if $Area2D.overlaps_body(player):
+		player.take_damage()
+		player.update_hud()
+
+#func on_collide(body : Node) -> void:
+#	if body.is_in_group(Globals.PlayerGroup):
+#		body.take_damage()
+#		body.update_hud()
 
 func reset_pathfinding() -> void:
 	should_get_path = true

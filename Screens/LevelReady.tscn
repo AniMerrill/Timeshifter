@@ -1,0 +1,57 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://SFX/level_ready.wav" type="AudioStream" id=1]
+[ext_resource path="res://Screens/LevelReady.gd" type="Script" id=2]
+[ext_resource path="res://Styles/big font.tres" type="DynamicFont" id=4]
+
+[node name="LevelReady" type="CanvasLayer"]
+script = ExtResource( 2 )
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -162.5
+margin_top = -90.0
+margin_right = 162.5
+margin_bottom = 90.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PanelContainer" type="ColorRect" parent="MarginContainer"]
+margin_right = 325.0
+margin_bottom = 180.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0, 0, 0, 1 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+margin_top = 64.0
+margin_right = 325.0
+margin_bottom = 115.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+margin_right = 325.0
+margin_bottom = 51.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 4 )
+text = "LEVEL XXX
+READY!"
+align = 1
+autowrap = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+autoplay = true

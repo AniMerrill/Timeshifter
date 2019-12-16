@@ -1,11 +1,13 @@
 extends Node2D
 
 onready var level := preload("res://test.tscn")
+
 onready var upgrade_store := preload("res://Screens/UpgradeStore.tscn")
 onready var gameover := preload("res://Screens/GameOver.tscn")
 onready var pause_scr := preload("res://Screens/Pause.tscn")
+onready var level_ready = preload("res://Screens/LevelReady.tscn")
 
-onready var level_ready = preload("res://SFX/level_ready.wav")
+#onready var level_ready = preload("res://SFX/level_ready.wav")
 onready var level_complete = preload("res://SFX/level_complete.wav")
 onready var g_o_voice = preload("res://SFX/game_over.wav")
 
@@ -42,8 +44,10 @@ func start_new_game():
 		if child.name != "BGM" && child.name != "SFX":
 			child.queue_free()
 	
-	gameplay = true
-	get_tree().paused = false
+	gameplay = false
+	get_tree().paused = true
+	
+	$BGM.play()
 	
 	level_number = 1
 	damage_upgrades = 0
@@ -52,6 +56,10 @@ func start_new_game():
 	
 	cur_level = level.instance()
 	add_child(cur_level)
+	
+	var inst = level_ready.instance()
+	inst.level_number = level_number
+	add_child(inst)
 
 func level_complete():
 	gameplay = false
@@ -79,12 +87,14 @@ func instance_next_level():
 	
 	add_child(cur_level)
 	
-	get_tree().paused = false
-	gameplay = true
+	var inst = level_ready.instance()
+	inst.level_number = level_number
+	add_child(inst)
 
 func game_over():
 	gameplay = false
 	get_tree().paused = true
+	$BGM.stop()
 	
 	var g_o = gameover.instance()
 	
